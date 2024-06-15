@@ -1,2 +1,2 @@
-# minicepton-rust
-Rust implementation to Minicepton Minimizer
+# Miniception-Rust
+Rust implementation to Miniception Minimizer algorithm.

@@ -1,0 +1,10 @@
+[package]
+name = "miniception-rust"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[[bin]]
+name = "miniception-rust"
+path = "main.rs"

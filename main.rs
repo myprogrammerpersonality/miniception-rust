@@ -21,11 +21,12 @@ fn minimizers_locations(s: &str, w: usize, k: usize) -> Vec<usize> {
     let mut minimizers: Vec<usize> = Vec::new();
 
     // Loop over the string s from index 0 to s.len() - (w + k - 1)
-    for i in 0..=s.len() - (w + k) {
+    for i in 0..s.len() - (w + k - 1) + 1 {
         let mut minimizer_order = order_kmer(&s[i..i + k]);
         let mut minimizer_pos = i;
-        for j in 1..=w - k {
+        for j in 0..w {
             let kmer_order = order_kmer(&s[i + j..i + j + k]);
+            log::debug!("i {} j {} k-mer {}, k-mer order {} minimizer order {}", i, j, &s[i + j..i + j + k], kmer_order, minimizer_order);
             if kmer_order < minimizer_order {
                 minimizer_order = kmer_order;
                 minimizer_pos = i + j;
@@ -38,16 +39,18 @@ fn minimizers_locations(s: &str, w: usize, k: usize) -> Vec<usize> {
 
 // Define the main function
 fn main() {
-    println!("Hello, World!");
-    let s = "GGAAATGCATGTAAAATGA";
-    let w = 10;
+    simple_logger::init_with_level(log::Level::Info).unwrap();
+
+    let s = "TTAAAATAAAA";
+    let w = 3;
     let k = 4;
 
     let minimizers: Vec<usize> = minimizers_locations(s, w, k);
 
     println!("Sequence Length: {}", s.len());
-    println!("Number of Windows: {}", s.len() - (w + k - 1));
+    println!("Number of Windows: {}", s.len() - (w + k - 1) + 1);
     println!("Number of Minimizers: {}", minimizers.len());
+    println!("Number of Unique Minimizers: {}", minimizers.iter().collect::<std::collections::HashSet<_>>().len());
     println!("{:?}", minimizers);
 }
 

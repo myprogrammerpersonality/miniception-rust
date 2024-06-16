@@ -9,4 +9,4 @@ simple_logger = "1.11.0"
 
 [[bin]]
 name = "miniception-rust"
-path = "main.rs"
+path = "src/main.rs"

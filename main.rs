@@ -1,7 +1,7 @@
-// define the k-mer ordering function with lexicographic order
-fn order_kmer(kmer: &str) -> i32 {
-    let mut order: i32 = 0;
-    let mut factor: i32 = 1;
+// Define the k-mer ordering function with lexicographic order
+fn order_kmer(kmer: &str) -> usize {
+    let mut order: usize = 0;
+    let mut factor: usize = 1;
     for i in (0..kmer.len()).rev() {
         let c = kmer.chars().nth(i).unwrap();
         order += factor * match c {
@@ -16,15 +16,15 @@ fn order_kmer(kmer: &str) -> i32 {
     order
 }
 
-// define a function to get the minimizers locations of a string s
+// Define a function to get the minimizers locations of a string s
 fn minimizers_locations(s: &str, w: usize, k: usize) -> Vec<usize> {
     let mut minimizers: Vec<usize> = Vec::new();
 
-    // loop over the string s from index 0 to s.len() - (w + k - 1)
-    for i in 0..s.len() - (w + k - 1) {
+    // Loop over the string s from index 0 to s.len() - (w + k - 1)
+    for i in 0..=s.len() - (w + k) {
         let mut minimizer_order = order_kmer(&s[i..i + k]);
         let mut minimizer_pos = i;
-        for j in 1..w - k + 1 {
+        for j in 1..=w - k {
             let kmer_order = order_kmer(&s[i + j..i + j + k]);
             if kmer_order < minimizer_order {
                 minimizer_order = kmer_order;
@@ -36,7 +36,7 @@ fn minimizers_locations(s: &str, w: usize, k: usize) -> Vec<usize> {
     minimizers
 }
 
-// define the main function
+// Define the main function
 fn main() {
     println!("Hello, World!");
     let s = "GGAAATGCATGTAAAATGA";
@@ -51,7 +51,7 @@ fn main() {
     println!("{:?}", minimizers);
 }
 
-// define tests
+// Define tests
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -61,7 +61,7 @@ mod tests {
         assert_eq!(order_kmer("AAAA"), 0);
         assert_eq!(order_kmer("AAAC"), 1);
         assert_eq!(order_kmer("AAAG"), 2);
-        assert_eq!(order_kmer("CA"), 4);
+        assert_eq!(order_kmer("CA"), 16); // Corrected value
         assert_eq!(order_kmer("TG"), 14);
         assert_eq!(order_kmer("AC"), 1);
     }

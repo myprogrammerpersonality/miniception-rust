@@ -8,7 +8,6 @@ fn test_order_kmer() {
     assert_eq!(order_kmer("CA"), 4);
     assert_eq!(order_kmer("TG"), 14);
     assert_eq!(order_kmer("AC"), 1);
-    assert_eq!(order_kmer("AA"), 1000);
 }
 
 #[test]

@@ -1,4 +1,4 @@
-use miniception_rust::{order_kmer, minimizers_locations};
+use miniception_rust::{order_kmer, minimizers_locations, minimizers_locations_mono_queue};
 
 #[test]
 fn test_order_kmer() {
@@ -16,5 +16,14 @@ fn test_minimizers_locations() {
     let w = 3;
     let k = 4;
     let minimizers: Vec<usize> = minimizers_locations(s, w, k);
+    assert_eq!(minimizers, vec![2, 2, 2, 3, 4, 7]);
+}
+
+#[test]
+fn test_minimizers_locations_mono_queue() {
+    let s = "TTAAAATAAAA";
+    let w = 3;
+    let k = 4;
+    let minimizers: Vec<usize> = minimizers_locations_mono_queue(s, w, k);
     assert_eq!(minimizers, vec![2, 2, 2, 3, 4, 7]);
 }

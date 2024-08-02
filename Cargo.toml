@@ -6,6 +6,7 @@ edition = "2021"
 [dependencies]
 log = "0.4"
 simple_logger = "1.11.0"
+rand = "0.8"
 
 [[bin]]
 name = "miniception-rust"

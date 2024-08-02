@@ -1,18 +1,39 @@
 use simple_logger;
-use miniception_rust::minimizers_locations;
+use miniception_rust::{minimizers_locations, minimizers_locations_mono_queue};
+use rand::thread_rng;
+use rand::distributions::{Uniform, Distribution};  // Add Distribution to the imports
+use std::time::Instant;
+
+fn random_dna_sequence(length: usize) -> String {
+    let mut rng = thread_rng();
+    let nucleotides = ['A', 'C', 'G', 'T'];
+    let dist = Uniform::from(0..nucleotides.len());
+    let seq: String = (0..length)
+        .map(|_| nucleotides[dist.sample(&mut rng)])
+        .collect();
+    seq
+}
 
 fn main() {
     simple_logger::init_with_level(log::Level::Info).unwrap();
 
-    let s = "TTAAAATAAAA";
-    let w = 3;
-    let k = 4;
+    let ns = vec![100, 1000, 5000, 10_000, 50_000, 100_000];  // Different values of n to test
+    let w = 40;
+    let k = 15;
 
-    let minimizers: Vec<usize> = minimizers_locations(s, w, k);
+    for &n in &ns {
+        let seq = random_dna_sequence(n);
 
-    println!("Sequence Length: {}", s.len());
-    println!("Number of Windows: {}", s.len() - (w + k - 1) + 1);
-    println!("Number of Minimizers: {}", minimizers.len());
-    println!("Number of Unique Minimizers: {}", minimizers.iter().collect::<std::collections::HashSet<_>>().len());
-    println!("{:?}", minimizers);
+        let start_time = Instant::now();
+        minimizers_locations(&seq, w, k);
+        let duration = start_time.elapsed();
+        println!("minimizers_locations with n={}: {:.6} seconds", n, duration.as_secs_f64());
+
+        let start_time = Instant::now();
+        minimizers_locations_mono_queue(&seq, w, k);
+        let duration = start_time.elapsed();
+        println!("minimizers_locations_mono_queue with n={}: {:.6} seconds", n, duration.as_secs_f64());
+
+        println!();
+    }
 }

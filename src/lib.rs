@@ -4,13 +4,14 @@ use std::collections::VecDeque;
 pub fn order_kmer(kmer: &str) -> usize {
     let mut order: usize = 0;
     let mut factor: usize = 1;
-    for i in (0..kmer.len()).rev() {
-        let c = kmer.chars().nth(i).unwrap();
-        order += factor * match c {
-            'A' => 0,
-            'C' => 1,
-            'G' => 2,
-            'T' => 3,
+    // Access the string as bytes for direct indexing
+    let bytes = kmer.as_bytes();
+    for &byte in bytes.iter().rev() {
+        order += factor * match byte {
+            b'A' => 0,
+            b'C' => 1,
+            b'G' => 2,
+            b'T' => 3,
             _ => panic!("Invalid character in k-mer"),
         };
         factor *= 4;

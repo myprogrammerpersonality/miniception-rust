@@ -25,14 +25,24 @@ fn main() {
         let seq = random_dna_sequence(n);
 
         let start_time = Instant::now();
-        minimizers_locations(&seq, w, k);
+        let minimizers = minimizers_locations(&seq, w, k);
         let duration = start_time.elapsed();
-        println!("minimizers_locations with n={}: {:.6} seconds", n, duration.as_secs_f64());
+        println!(
+            "minimizers_locations_####_##### with n={}: {:.6} seconds, length of output: {}",
+            n,
+            duration.as_secs_f64(),
+            minimizers.len()
+        );
 
         let start_time = Instant::now();
-        minimizers_locations_mono_queue(&seq, w, k);
+        let minimizers_mono_queue = minimizers_locations_mono_queue(&seq, w, k);
         let duration = start_time.elapsed();
-        println!("minimizers_locations_mono_queue with n={}: {:.6} seconds", n, duration.as_secs_f64());
+        println!(
+            "minimizers_locations_mono_queue with n={}: {:.6} seconds, length of output: {}",
+            n,
+            duration.as_secs_f64(),
+            minimizers_mono_queue.len()
+        );
 
         println!();
     }

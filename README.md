@@ -3,7 +3,8 @@ Rust implementation to Miniception Minimizer algorithm.
 
 # Usage
 ```bash
-cargo run
+cargo run # debug mode
+cargo run --release # for faster execution
 ```
 
 # Testing

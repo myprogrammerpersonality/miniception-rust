@@ -1,5 +1,5 @@
 # Miniception-Rust
-Rust implementation to Miniception Minimizer algorithm.
+Rust implementation to Miniception Minimizer algorithm. Work in Progress!
 
 # Usage
 ```bash
